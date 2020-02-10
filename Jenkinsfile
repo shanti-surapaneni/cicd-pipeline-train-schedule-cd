@@ -46,8 +46,8 @@ pipeline
                 {
                     sshPublisher
                      (
-                        publishers: 
-                          [
+                        publishers 
+                          (
                             sshPublisherDesc
                              (
                                 configName: 'deploy_server',
@@ -67,7 +67,7 @@ pipeline
                                      )
                                 ]
                               )
-                           ]
+                           )
                       )
                 }
             }
