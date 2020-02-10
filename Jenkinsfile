@@ -21,7 +21,7 @@ pipeline {
         {
             steps 
             {
-              echo 'Tests will run'
+              echo 'Run some Tests'
              }
         }
         stage('Build') 
