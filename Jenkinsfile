@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     stages {
@@ -8,5 +9,28 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-    }
-}
+        stage('DeployToServer') {
+            when {
+                branch 'master'
+            }
+            steps {
+                 {
+                    sshPublisher(
+                        failOnError: true,
+                        continueOnError: false,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'deploy_server'
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: 'dist/trainSchedule.zip',
+                                        removePrefix: 'dist/',
+                                        remoteDirectory: '/tmp',
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
