@@ -24,15 +24,13 @@ pipeline {
               echo 'Run some Tests'
              }
         }
-        stage('Build') 
-        {
-            steps 
-            {
+        stage('Build') {
+            steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
-        }
+        }  
         stage ('Deploy') 
         {
             when 
