@@ -42,8 +42,6 @@ pipeline {
             }
             steps
             {
-
-            sh 'ssh root@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
             sh 'ssh root@18.217.119.24 mkdir -p /var/www/temp_deploy'
             sh 'scp -r dist root@18.217.119.24:/var/www/temp_deploy/dist/'
             sh 'ssh root@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
