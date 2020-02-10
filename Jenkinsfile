@@ -2,36 +2,31 @@
 pipeline {
     agent any
     stages {
+          
+          stage ('provision environment') {
+               echo 'provision server env'
+               }
+         stage ('Code analyse') {
+              echo 'Run some lints'
+              }
+        stage ('Unit test') {
+              echo 'Tests will run'
+             }
         stage('Build') {
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
-        }
-        stage('DeployToServer') {
+        stage ('Deploy') {
             when {
                 branch 'master'
             }
-            steps {
-                 {
-                    sshPublisher(
-                        failOnError: true,
-                        continueOnError: false,
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'deploy_server'
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: 'dist/trainSchedule.zip',
-                                        removePrefix: 'dist/',
-                                        remoteDirectory: '/tmp',
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
+            sh 'ssh root@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
+            sh 'ssh root@18.217.119.24 mkdir -p /var/www/temp_deploy'
+            sh 'scp -r dist root@18.217.119.24:/var/www/temp_deploy/dist/'
+            sh 'ssh root@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
+       }
+     }
     }
+}
