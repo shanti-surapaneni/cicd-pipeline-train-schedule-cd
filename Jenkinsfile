@@ -42,7 +42,6 @@ pipeline {
             }
             steps
             { 
-                ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=no ubuntu@1.1.1.1
             sh 'ssh -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com rm -rf /var/www/temp_deploy/dist/'
             sh 'ssh -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com mkdir -p /var/www/temp_deploy'
             sh 'scp -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com:/var/www/temp_deploy/dist/'
