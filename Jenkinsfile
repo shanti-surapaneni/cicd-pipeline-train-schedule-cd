@@ -46,7 +46,6 @@ pipeline
                 {
                     sshPublisher
                      (
-                        failOnError: true,
                         publishers: 
                           [
                             sshPublisherDesc
