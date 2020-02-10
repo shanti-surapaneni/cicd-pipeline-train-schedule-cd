@@ -2,16 +2,21 @@
 pipeline {
     agent any
     stages {
-          
+          steps {
           stage ('provision environment') {
                echo 'provision server env'
                }
+          }
          stage ('Code analyse') {
+             steps {
               echo 'Run some lints'
               }
+         }
         stage ('Unit test') {
+            steps {
               echo 'Tests will run'
              }
+        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
