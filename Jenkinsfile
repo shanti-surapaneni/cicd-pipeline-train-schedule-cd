@@ -42,10 +42,10 @@ pipeline {
             }
             steps
             {   
-            sh 'ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=no root@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
-            sh 'ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=no root@18.217.119.24 mkdir -p /var/www/temp_deploy'
-            sh 'scp -i ~/.ssh/key.pem -o StrictHostKeyChecking=no -r dist root@18.217.119.24:/var/www/temp_deploy/dist/'
-            sh 'ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=no root@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
+            sh 'ssh -i -o StrictHostKeyChecking=no root@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
+            sh 'ssh -i -o StrictHostKeyChecking=no root@18.217.119.24 mkdir -p /var/www/temp_deploy'
+            sh 'scp -i -o StrictHostKeyChecking=no -r dist root@18.217.119.24:/var/www/temp_deploy/dist/'
+            sh 'ssh -i -o StrictHostKeyChecking=no root@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
             }
         }      
      }
