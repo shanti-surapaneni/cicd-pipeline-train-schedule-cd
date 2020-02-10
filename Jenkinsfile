@@ -42,10 +42,10 @@ pipeline {
             }
             steps
             { 
-            sh 'ssh -i ../../s.pem centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com rm -rf /var/www/temp_deploy/dist/'
-            sh 'ssh -i ../../s.pem centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com mkdir -p /var/www/temp_deploy'
-            sh 'scp -i ../../s.pem centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com:/var/www/temp_deploy/dist/'
-            sh 'ssh -i ../../s.pem centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
+            sh 'ssh -i ../../s.pem root@ec2-18-217-119-24.us-east-2.compute.amazonaws.com rm -rf /var/www/temp_deploy/dist/'
+            sh 'ssh -i ../../s.pem root@ec2-18-217-119-24.us-east-2.compute.amazonaws.com mkdir -p /var/www/temp_deploy'
+            sh 'scp -i ../../s.pem root@ec2-18-217-119-24.us-east-2.compute.amazonaws.com:/var/www/temp_deploy/dist/'
+            sh 'ssh -i ../../s.pem root@ec2-18-217-119-24.us-east-2.compute.amazonaws.com "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
             }
         }      
      }
