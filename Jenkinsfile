@@ -41,11 +41,12 @@ pipeline {
                 branch 'master'
             }
             steps
-            {   
-            sh 'ssh jenkins@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
-            sh 'ssh jenkins@18.217.119.24 mkdir -p /var/www/temp_deploy'
-            sh 'scp -r dist jenkins@18.217.119.24:/var/www/temp_deploy/dist/'
-            sh 'ssh jenkins@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
+            { 
+                ssh -i ~/.ssh/key.pem -o StrictHostKeyChecking=no ubuntu@1.1.1.1
+            sh 'ssh -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com rm -rf /var/www/temp_deploy/dist/'
+            sh 'ssh -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com mkdir -p /var/www/temp_deploy'
+            sh 'scp -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com:/var/www/temp_deploy/dist/'
+            sh 'ssh -i ../../s.pem -o StrictHostKeyChecking=no centos@ec2-18-217-119-24.us-east-2.compute.amazonaws.com "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
             }
         }      
      }
