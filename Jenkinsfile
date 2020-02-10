@@ -33,20 +33,45 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage ('Deploy') 
+        stage('Deploy') 
         {
             when 
             {
-
                 branch 'master'
             }
             steps
             {
+                withCredentials([usernamePassword(credentialsId: 'web_server_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) 
+                {
+                    sshPublisher
+                 (
+                        failOnError: true,
+                        continueOnError: false,
+                        publishers: 
+                     [
+                            sshPublisherDesc
 
-            sh 'ssh root@18.217.119.24 rm -rf /var/www/temp_deploy/dist/'
-            sh 'ssh root@18.217.119.24 mkdir -p /var/www/temp_deploy'
-            sh 'scp -r dist root@18.217.119.24:/var/www/temp_deploy/dist/'
-            sh 'ssh root@18.217.119.24 "rm -rf /var/www/trainSchedule.com/dist/ && mv /var/www/temp_deploy/dist/ /var/www/trainSchedule.com/"'
+                          (
+                                configName: 'deploy_server',
+                                sshCredentials: 
+                                [
+                                    username: "$USERNAME",
+                                    encryptedPassphrase: "$USERPASS"
+                                ], 
+                                transfers: 
+                                [
+                                    sshTransfer
+                                   (
+                                        sourceFiles: 'dist/trainSchedule.zip',
+                                        removePrefix: 'dist/',
+                                        remoteDirectory: '/tmp'
+                                        
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
             }
         }      
      }
